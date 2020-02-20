@@ -231,8 +231,12 @@ class Branch {
 		}
 		$dir_name = $this->config->getName() . '-src-' . ($build_type ? $build_type.'-' : $build_type) . 'r' . $rev_name;
 		$build_dir = $this->config->getBuildDir();
+		// If it doesn't exist, we will try to create it.  If it fails, then bail
 		if (!file_exists($build_dir)) {
-			throw new \Exception("Directory '$build_dir' doesn't exist");
+			mkdir($build_dir, 0777, true);
+			if (!file_exists($build_dir)) {
+				throw new \Exception("Directory '$build_dir' doesn't exist");
+			}
 		}
 		$target = $build_dir . '/' . $dir_name;
 		$exportfile = $this->repo->export($target, $rev_name);
