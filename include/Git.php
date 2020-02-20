@@ -39,7 +39,16 @@ class Git {
 
 	public function export($dest, $revision = false)
 	{
-		$http_url = preg_replace('/git:\/\//', 'http://', $this->repo_url);
+		// MAJOR ASSUMPTION:  This code acts like it's going against git.php.net, no matter the method.
+		
+		// If repo_url starts with git:, then replace with http://
+		if (strpos($this->repo_url, "git:") !== false) {
+			$http_url = preg_replace('/git:\/\//', 'http://', $this->repo_url);
+		}
+		// if repo_url starts with http: or https:, make sure we don't have repository in the title
+		if ((strpos($this->repo_url, "http:") !== false) || (strpos($this->repo_url, "https:") !== false)) {
+			$http_url = preg_replace('/\/repository/', '', $this->repo_url);
+		}
 		$rev = $revision ? $revision : $this->branch;
 		$url = $http_url . '/?p=' . $this->module . ';a=snapshot;h=' . $rev . ';sf=zip';
 		$dest .= '.zip';
