@@ -2,7 +2,9 @@
 
 rem RMTOOLS specific, not expected to depend on the SDK
 
-set PHP_RMTOOLS_PHP_SDK_ROOT_PATH=c:\php-snap-build\php-sdk
+set PHP_RMTOOLS_BUILD_PATH=c:\php-snap-build
+
+set PHP_RMTOOLS_PHP_SDK_ROOT_PATH=%PHP_RMTOOLS_BUILD_PATH%\php-sdk
 
 set PHP_RMTOOLS_BIN_PATH=%~dp0
 set PHP_RMTOOLS_BIN_PATH=%PHP_RMTOOLS_BIN_PATH:~0,-1%
@@ -16,10 +18,10 @@ set PHP_RMTOOLS_LOCK_PATH=%PHP_RMTOOLS_ROOT_PATH%\locks
 set PHP_RMTOOLS_LOG_PATH=%PHP_RMTOOLS_ROOT_PATH%\logs
 set PHP_RMTOOLS_TMP_PATH=%PHP_RMTOOLS_ROOT_PATH%\tmp
 
-set PHP_RMTOOLS_PECL_IN_PKG_PATH=c:\php-snap-build\in-pkg\release
-set PHP_RMTOOLS_PECL_IN_PKG_NOMAIL_PATH=c:\php-snap-build\in-pkg\release-nomail
-set PHP_RMTOOLS_PECL_IN_SNAP_PATH=c:\php-snap-build\in-pkg\snap
-set PHP_RMTOOLS_PECL_IN_SNAP_NOMAIL_PATH=c:\php-snap-build\in-pkg\snap-nomail
+set PHP_RMTOOLS_PECL_IN_PKG_PATH=%PHP_RMTOOLS_BUILD_PATH%\in-pkg\release
+set PHP_RMTOOLS_PECL_IN_PKG_NOMAIL_PATH=%PHP_RMTOOLS_BUILD_PATH%\in-pkg\release-nomail
+set PHP_RMTOOLS_PECL_IN_SNAP_PATH=%PHP_RMTOOLS_BUILD_PATH%\in-pkg\snap
+set PHP_RMTOOLS_PECL_IN_SNAP_NOMAIL_PATH=%PHP_RMTOOLS_BUILD_PATH%\in-pkg\snap-nomail
 
 rem The below can be used to automate snaps against pre release of PHP or for
 rem the mass rebuild. For snaps against some pre PHP, adjust the rss watcher
@@ -27,10 +29,10 @@ rem call with --enable-pre. For a mass rebuild, just put all the packages into
 rem the corresponding directory. This way, the regular builds and snaps will
 rem always have a higher priority over the pre or mass rebuild, thus the
 rem normal operation is not hurt.
-set PHP_RMTOOLS_PECL_IN_PKG_MASS_REBUILD_PATH=c:\php-snap-build\in-pkg\release-mass-rebuild
-set PHP_RMTOOLS_PECL_IN_PKG_MASS_REBUILD_NOMAIL_PATH=c:\php-snap-build\in-pkg\release-nomail-mass-rebuild
-set PHP_RMTOOLS_PECL_IN_SNAP_PRE_PATH=c:\php-snap-build\in-pkg\snap-pre
-set PHP_RMTOOLS_PECL_IN_SNAP_NOMAIL_PRE_PATH=c:\php-snap-build\in-pkg\snap-pre-nomail
+set PHP_RMTOOLS_PECL_IN_PKG_MASS_REBUILD_PATH=%PHP_RMTOOLS_BUILD_PATH%\in-pkg\release-mass-rebuild
+set PHP_RMTOOLS_PECL_IN_PKG_MASS_REBUILD_NOMAIL_PATH=%PHP_RMTOOLS_BUILD_PATH%\in-pkg\release-nomail-mass-rebuild
+set PHP_RMTOOLS_PECL_IN_SNAP_PRE_PATH=%PHP_RMTOOLS_BUILD_PATH%\in-pkg\snap-pre
+set PHP_RMTOOLS_PECL_IN_SNAP_NOMAIL_PRE_PATH=%PHP_RMTOOLS_BUILD_PATH%\in-pkg\snap-pre-nomail
 
 set PATH=%PHP_RMTOOLS_BIN_PATH%;%PATH%
 
