@@ -235,7 +235,8 @@ class Branch {
 		if (!is_dir($build_dir)) {
 			if(!mkdir($build_dir, 0777, true)) {
 				if (!is_dir($build_dir)) {
-				throw new \Exception("Directory '$build_dir' doesn't exist");
+					throw new \Exception("Directory '$build_dir' doesn't exist");
+				}
 			}
 		}
 		$target = $build_dir . '/' . $dir_name;
