@@ -245,20 +245,22 @@ if ($branch->hasNewRevision() || !$branch->isLastRevisionExported($branch->getLa
 	}
 
 	$src_dir = $branch_name . '/r' . $last_rev;
-	echo "Uploading $toupload_dir\n"
-	rm\upload_build_result_ftp_curl($toupload_dir, $src_dir);
-	/* FIXME This is still not safe, locking needed! */
-	foreach (["$toupload_dir/logs", $toupload_dir] as $path) {
-		$items = scandir($path);
-		foreach ($items as $item) {
-			$full = $path . "/" . $item;
-			if (is_file($full)) {
-				@unlink($full);
+	if(! $skipUpload) {
+		echo "Uploading $toupload_dir\n";
+		rm\upload_build_result_ftp_curl($toupload_dir, $src_dir);
+		/* FIXME This is still not safe, locking needed! */
+		foreach (["$toupload_dir/logs", $toupload_dir] as $path) {
+			$items = scandir($path);
+			foreach ($items as $item) {
+				$full = $path . "/" . $item;
+				if (is_file($full)) {
+					@unlink($full);
+				}
 			}
 		}
+		//rm\rmdir_rf($toupload_dir);
 	}
-	//rm\rmdir_rf($toupload_dir);
-	
+		
 	$branch->setLastRevisionExported($last_rev);
 }
 
