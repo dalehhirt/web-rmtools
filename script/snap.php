@@ -5,15 +5,34 @@ include __DIR__ . '/../include/Tools.php';
 
 use rmtools as rm;
 
-if ($argc < 2 || $argc > 4) {
-	echo "Usage: snapshot <branch> <config name> [force 1/0]\n";
-	exit();
-}
+$shortopts = NULL; //"c:p:mu";
+$longopts = array("branch:", "build:", "force", "skip-upload");
+
+$options = getopt($shortopts, $longopts);
 
 $have_build_run = false;
-$branch_name = $argv[1];
-$build_type = $argv[2];
-$force = isset($argv[3]) && $argv[3] ? true : false;
+$branch_name = isset($options['branch']) ? $options['branch'] : NULL;
+$build_type = isset($options['build']) ? $options['build'] : NULL;
+$force = isset($options['force']);
+$skipUpload = isset($options['skip-upload']);
+
+if (NULL == $branch_name || NULL == $build_type) {
+	echo "Usage: snap.php [OPTION] ..." . PHP_EOL;
+	echo "  --branch         Branch to build on." . PHP_EOL;
+	echo "  --build        Build type." . PHP_EOL;
+	echo "  --skip-upload         Skip uploading the builds to the windows.php.net, optional." . PHP_EOL;
+	echo "  --force        Build regardless if we've built before, optional." . PHP_EOL;
+	echo PHP_EOL;
+	echo "Examples: " . PHP_EOL;
+	echo PHP_EOL;
+	echo "Just build, binaries and logs will stay in TMP_DIR" . PHP_EOL;
+	echo "pecl --config=pickle --package=someext" . PHP_EOL;
+	echo PHP_EOL;
+	echo "Build and upload to windows.php.net/pickle/releases/some/1.0.0/" . PHP_EOL;
+	echo "pecl --config=pickle70 --upload --package=some-1.0.0" . PHP_EOL;
+	exit()
+}
+
 $sdk_arch = getenv("PHP_SDK_ARCH");
 if (!$sdk_arch) {
 	throw new \Exception("Arch is empty, the SDK might not have been setup. ");
