@@ -30,7 +30,7 @@ if (NULL == $branch_name || NULL == $build_type) {
 	echo PHP_EOL;
 	echo "Build and upload to windows.php.net/pickle/releases/some/1.0.0/" . PHP_EOL;
 	echo "pecl --config=pickle70 --upload --package=some-1.0.0" . PHP_EOL;
-	exit()
+	exit();
 }
 
 $sdk_arch = getenv("PHP_SDK_ARCH");
