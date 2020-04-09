@@ -17,7 +17,7 @@ class Git {
 			if (!$git_cmd) {
 				throw new \Exception("Git binary not available");
 			}
-			var_dump($git_cmd);
+			$git_cmd = get_first($git_cmd);
 			$this->git_cmd = $git_cmd;
 		}
 
@@ -26,8 +26,26 @@ class Git {
 			if (!$tar_cmd) {
 				throw new \Exception("Tar binary not available");
 			}
+			$tar_cmd = get_first($tar_cmd);
 			$this->tar_cmd = $tar_cmd;
 		}
+	}
+
+	function get_first($cmdString) {
+		$returnValue = '';
+		if (is_array($cmdString)) {
+			$returnValue = $cmdString[0];
+		}
+		elseif (strpos($cmdString, "\n") !== FALSE) {
+			# New line break found
+			$cmd_array = explode("\n", $cmdString);
+			$returnValue = $cmd_array[0];
+		}
+		else {
+			$returnValue = $cmdString;
+		}
+		echo "Found: $returnValue";
+		return $returnValue;
 	}
 
 	function setModule($module) {
