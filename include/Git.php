@@ -58,7 +58,8 @@ class Git {
 
 	public function export($dest, $revision = false)
 	{
-		$http_url = preg_replace('/git:\/\//', 'http://', $this->repo_url);
+		# changed the url for where you download exports.
+		$http_url = preg_replace('/repository', '', preg_replace('/git:\/\//', 'http://', $this->repo_url));
 		$rev = $revision ? $revision : $this->branch;
 		$url = $http_url . '/?p=' . $this->module . ';a=snapshot;h=' . $rev . ';sf=zip';
 		$dest .= '.zip';
