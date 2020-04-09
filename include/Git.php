@@ -17,7 +17,7 @@ class Git {
 			if (!$git_cmd) {
 				throw new \Exception("Git binary not available");
 			}
-			$git_cmd = get_first($git_cmd);
+			$git_cmd = $this->get_first($git_cmd);
 			$this->git_cmd = $git_cmd;
 		}
 
@@ -26,7 +26,7 @@ class Git {
 			if (!$tar_cmd) {
 				throw new \Exception("Tar binary not available");
 			}
-			$tar_cmd = get_first($tar_cmd);
+			$tar_cmd = $this->get_first($tar_cmd);
 			$this->tar_cmd = $tar_cmd;
 		}
 	}
