@@ -55,6 +55,7 @@ class Git {
 	{
 		$try = 3;
 		$cmd = '"' . $this->git_cmd . '" ls-remote ' . $this->repo_url . '/' . $this->module . ' ' . $this->branch;
+		echo "Running: " . $cmd . "\n";
 		while ( $try > 0 )  {
 			$res = exec_sep_log($cmd);
 			if ($res && !empty($res['log_stdout']))  {
