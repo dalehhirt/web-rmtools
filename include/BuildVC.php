@@ -22,6 +22,7 @@ class BuildVC {
 	public $log_configure;
 	public $log_make;
 	public $log_archive;
+	public $log_pgo;
 
 	public $zip_devel_filename;
 	public $zip_debug_filename;
