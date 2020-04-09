@@ -17,6 +17,7 @@ class Git {
 			if (!$git_cmd) {
 				throw new \Exception("Git binary not available");
 			}
+			var_dump($git_cmd);
 			$this->git_cmd = $git_cmd;
 		}
 
