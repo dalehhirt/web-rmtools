@@ -45,6 +45,9 @@ class BranchConfig {
 			}
 		}
 		$this->builds = $builds;
+		echo "Config values\n";
+		echo "-------------\n";
+		var_dump($this->config);
 	}
 
 	function __call($name, $key) {
