@@ -62,6 +62,7 @@ class Git {
 		$rev = $revision ? $revision : $this->branch;
 		$url = $http_url . '/?p=' . $this->module . ';a=snapshot;h=' . $rev . ';sf=zip';
 		$dest .= '.zip';
+		echo "Retrieving $url to $dest\n";
 		wget($url, $dest);
 		return $dest;
 	}
