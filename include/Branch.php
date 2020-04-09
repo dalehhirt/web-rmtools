@@ -259,11 +259,13 @@ class Branch {
 				rmdir_rf($extract_dir);
 				$extract_dir = $extract_dir . "-" . rand(0, 9);
 			}
+			echo "Current Extraction directory:" . $extract_dir . "\n";
 			if (true !== mkdir($extract_dir)) {
 				throw new \Exception("Could not create temporary exctract dir under '$extract_dir'.");
 			}
 
 			$cmd = 'unzip -q -o ' . $exportfile . ' -d ' . $extract_dir;
+			echo "Running: $cmd\n";
 			$res = exec_single_log($cmd);
 			if (!$res) {
 				throw new \Exception("Unzipping $exportfile failed.");
@@ -273,10 +275,12 @@ class Branch {
 			} else {
 				$gitname = $extract_dir . '/php-src-' . $rev_name;
 			}
+			echo "Current gitname:" . $gitname . "\n";
 			while(is_dir($target)) {
 				rmdir_rf($target);
 				$target = $target . "-" . rand(0, 9);
 			}
+			echo "Current target directory:" . $target . "\n";
 			if (true !== rename($gitname, $target)) {
 				throw new \Exception("Failed to rename '$gitname' to '$target'");
 			}
