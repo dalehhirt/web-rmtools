@@ -12,7 +12,7 @@ if ($argc < 2 || $argc > 4) {
 
 echo "Environmental Variables\n";
 echo "-----------------------\n";
-var_dump(get_env());
+var_dump(getenv());
 
 $have_build_run = false;
 $branch_name = $argv[1];
