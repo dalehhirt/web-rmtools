@@ -10,6 +10,7 @@ function exec_sep_log($cmd, $cwd = NULL, $env = NULL)
 			2 => array("pipe", "w") // stderr is a file to write to
 	);
 
+	echo date("YmdHis") . " exec_sep_log: $cmd" . "\n";
 	$process = proc_open($cmd, $descriptor_spec, $pipes, $cwd, $env);
 
 	if (is_resource($process)) {
@@ -43,6 +44,8 @@ function exec_single_log($cmd, $cwd = NULL, $env = NULL)
 
 	$cmd .= ' 2>&1';
 
+	echo date("YmdHis") . " exec_single_log: $cmd" . "\n";
+
 	$process = proc_open($cmd, $descriptor_spec, $pipes, $cwd, $env);
 
 	if (is_resource($process)) {
@@ -66,6 +69,7 @@ function exec_single_log($cmd, $cwd = NULL, $env = NULL)
 
 function wget($url, $dest)
 {
+	echo date("YmdHis") . " wget: $url -> $dest" . "\n";
 	$fp = fopen ($dest, 'wb+');
 	$ch = \curl_init();
 	\curl_setopt($ch, CURLOPT_URL,$url);
