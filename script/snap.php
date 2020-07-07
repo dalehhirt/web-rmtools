@@ -10,9 +10,7 @@ if ($argc < 2 || $argc > 4) {
 	exit();
 }
 
-echo "Environmental Variables\n";
-echo "-----------------------\n";
-var_dump(getenv());
+rm\debug_dump();
 
 $have_build_run = false;
 $branch_name = $argv[1];

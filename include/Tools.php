@@ -1,5 +1,24 @@
 <?php
 namespace rmtools;
+
+function debug_dump()
+{
+	echo "Environmental Variables\n";
+	echo "-----------------------\n";
+	var_dump(getenv());
+
+	echo "VS Commands\n";
+	echo "-----------\n";
+	$cmd = trim(shell_exec("where cl.exe"));
+	echo $cmd . "\n";
+
+	$cmd = trim(shell_exec("where link.exe"));
+	echo $cmd . "\n";
+
+	$cmd = trim(shell_exec("where rc.exe"));
+	echo $cmd . "\n";
+}
+
 function exec_sep_log($cmd, $cwd = NULL, $env = NULL)
 {
     $return_value = false;
