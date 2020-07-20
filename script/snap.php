@@ -5,8 +5,11 @@ include __DIR__ . '/../include/Tools.php';
 
 use rmtools as rm;
 
-if ($argc < 2 || $argc > 5) {
-	echo "Usage: snapshot <branch> <config name> [force 1/0] [delete_output_files 1/0]\n";
+if ($argc < 2 || $argc > 6) {
+	echo "Usage: snapshot <branch> <config name> [force 1/0] [delete_output_files 1/0] [upload_output_files 1/0] \n";
+	echo "force:  Force rebuilding if specified.\n";
+	echo "delete_output_files: Delete output files if specified.\n";
+	echo "upload_output_files: Don't upload files to FTP site if specified.\n";
 	exit();
 }
 
@@ -20,6 +23,11 @@ $force = isset($argv[3]) && $argv[3] ? true : false;
 $delete_output_files = $false;
 if(isset($argv[4])) { 
 	$delete_output_files = $argv[4] ? true : false; 
+}
+
+$upload_output_files = $true;
+if(isset($argv[5])) { 
+	$upload_output_files = $argv[5] ? true : false; 
 }
 
 $sdk_arch = getenv("PHP_SDK_ARCH");
@@ -235,14 +243,18 @@ if ($branch->hasNewRevision() || !$branch->isLastRevisionExported($branch->getLa
 	}
 
 	$src_dir = $branch_name . '/r' . $last_rev;
-	rm\upload_build_result_ftp_curl($toupload_dir, $src_dir);
+	if($upload_output_files) {
+		rm\upload_build_result_ftp_curl($toupload_dir, $src_dir);
+	}
 	/* FIXME This is still not safe, locking needed! */
-	foreach (["$toupload_dir/logs", $toupload_dir] as $path) {
-		$items = scandir($path);
-		foreach ($items as $item) {
-			$full = $path . "/" . $item;
-			if (is_file($full) && $delete_output_files) {
-				@unlink($full);
+	if($delete_output_files) {
+		foreach (["$toupload_dir/logs", $toupload_dir] as $path) {
+			$items = scandir($path);
+			foreach ($items as $item) {
+				$full = $path . "/" . $item;
+				if (is_file($full)) {
+					@unlink($full);
+				}
 			}
 		}
 	}
