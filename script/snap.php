@@ -5,8 +5,8 @@ include __DIR__ . '/../include/Tools.php';
 
 use rmtools as rm;
 
-if ($argc < 2 || $argc > 4) {
-	echo "Usage: snapshot <branch> <config name> [force 1/0]\n";
+if ($argc < 2 || $argc > 5) {
+	echo "Usage: snapshot <branch> <config name> [force 1/0] [delete_output_files 1/0]\n";
 	exit();
 }
 
@@ -16,6 +16,12 @@ $have_build_run = false;
 $branch_name = $argv[1];
 $build_type = $argv[2];
 $force = isset($argv[3]) && $argv[3] ? true : false;
+
+$delete_output_files = $false;
+if(isset($argv[4])) { 
+	$delete_output_files = $argv[4] ? true : false; 
+}
+
 $sdk_arch = getenv("PHP_SDK_ARCH");
 if (!$sdk_arch) {
 	throw new \Exception("Arch is empty, the SDK might not have been setup. ");
@@ -80,6 +86,7 @@ if ($branch->hasNewRevision() || !$branch->isLastRevisionExported($branch->getLa
 	$src_original_path =  $branch->createSourceSnap($build_type, $last_rev);
 
 	$toupload_dir = TMP_DIR . '/' . $branch_name . '/r' . $last_rev . '-builds/';
+	echo "Upload Directory: $toupload_dir\n";
 	if (!is_dir($toupload_dir)) {
 		mkdir($toupload_dir, 0655, true);
 	}
@@ -234,7 +241,7 @@ if ($branch->hasNewRevision() || !$branch->isLastRevisionExported($branch->getLa
 		$items = scandir($path);
 		foreach ($items as $item) {
 			$full = $path . "/" . $item;
-			if (is_file($full)) {
+			if (is_file($full) && $delete_output_files) {
 				@unlink($full);
 			}
 		}
